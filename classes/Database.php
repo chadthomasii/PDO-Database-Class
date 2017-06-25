@@ -76,7 +76,7 @@ class Database{
     }
     
     //Executes statement
-    public function execute(){
+    public function execute(){ 
         return $this ->stmt->execute();
     }
     
