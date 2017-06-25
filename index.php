@@ -3,16 +3,49 @@ require 'classes/Database.php';
 
 $database = new Database;
 
-$database ->query('SELECT * FROM posts WHERE id = :id');
-$database->bind(':id', 1);
-$rows = $database->resultset();
+
+//Sanatizes input of the post variable
+$post = filter_input_array(INPUT_POST,FILTER_SANITIZE_STRING);
+
+//Waits for post variable of submit, and adds to database
+if(isset($post['submit']))
+{
+    //Set Post Vars from form
+    $title = $post['title'];
+    $body = $post['body'];
+    
+    $database->query('INSERT INTO posts (title,body) VALUES(:title,:body)');
+    $database->bind(':title', $title);
+    $database->bind(':body', $body);
+    $database->execute();
+    if($database->lastInsertId())
+    {
+        echo'<p>Post Added</p>';
+    }
+}
+
+//Gets all the posts
+$database ->query('SELECT * FROM posts'); 
+$rows = $database->resultset(); //Returned Result set
 
 ?>
+
+<h1>Add Post</h1>
+<form method="post" action="<?php $_SERVER['PHP_SELF']; //Form submits to itelf?>">
+    
+    <label>Post Title</label><br />
+    <input type="text" name="title" placeholder="Add a Title"/> <br /><br />
+    <label>Post Body</label><br />
+    <textarea name="body"></textarea><br /><br />
+    <input type="submit" name="submit" value="Submit"/>
+
+
+</form>
 
 <h1>Posts</h1>
 <div>
 
-    <?php foreach($rows as $row) : ?>
+    <?php foreach($rows as $row) : //Loops througheach row Displays form title/body ?> 
     
         <div>
             

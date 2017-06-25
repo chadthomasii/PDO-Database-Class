@@ -89,6 +89,12 @@ class Database{
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    //Returns the last inserted ID of an insert statement
+    public function lastInsertId()
+    {
+        $this->dbh->lastInsertId();
+    }
+    
     
     
 }
