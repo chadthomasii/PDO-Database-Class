@@ -1,11 +1,12 @@
 <?php
-class Database{
+class Database
+{
     
     //Database Credentials
 	private $host	= 'localhost';
 	private $user	= 'root';
 	private $pass	= '';
-	private $dbname	= 'myblog';
+	private $dbname	= '';
     
     //Database handlers, Error, and Prepeared statement handler
 	private $dbh;
@@ -76,14 +77,14 @@ class Database{
     }
     
     //Executes statement
-    public function execute(){ 
+    public function execute()
+    { 
         return $this ->stmt->execute();
     }
     
     //Gives result set
-    public function resultset(){
-        //Calls the execute function
-        $this->execute();
+    public function resultSet()
+    {
         
         //Returns Results in an assosiative Array
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -92,12 +93,26 @@ class Database{
     //Returns the last inserted ID of an insert statement
     public function lastInsertId()
     {
-        $this->dbh->lastInsertId();
+        return $this->dbh->lastInsertId();
+    }
+
+    public function getInfo($table, $id)
+    {
+        //Use the given id to find
+        $this->query("SELECT * FROM $table WHERE id = :id");
+        $this->bind(":id", $id);
+        $this->execute();
+        
+        //give back the 
+        return $this->resulSset();
+
     }
     
     
     
 }
+
+$database = new Database();
 
 
 
