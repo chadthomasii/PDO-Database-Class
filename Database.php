@@ -1,5 +1,8 @@
 <?php
 
+//Display All Errors
+ini_set('display_errors', 1);
+
 
 class Database
 {
@@ -8,7 +11,7 @@ class Database
 	private $host	= 'localhost';
 	private $user	= 'root';
 	private $pass	= 'root';
-	private $dbname	= 'Testing';
+	private $dbname	= 'ig_clone';
     
     //Database handlers, Error, and Prepeared statement handler
 	private $dbh;
@@ -81,7 +84,7 @@ class Database
     //Executes statement
     public function execute()
     { 
-        return $this ->stmt->execute();
+        return $this->stmt->execute();
     }
     
     //Gives result set
