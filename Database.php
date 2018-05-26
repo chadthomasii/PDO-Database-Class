@@ -1,12 +1,14 @@
 <?php
+
+
 class Database
 {
     
     //Database Credentials
 	private $host	= 'localhost';
 	private $user	= 'root';
-	private $pass	= '';
-	private $dbname	= '';
+	private $pass	= 'root';
+	private $dbname	= 'Testing';
     
     //Database handlers, Error, and Prepeared statement handler
 	private $dbh;
@@ -20,7 +22,6 @@ class Database
 		// Set PDO  Options 
 		$options = array
         (
-			PDO::ATTR_PERSISTENT => true,
 			PDO::ATTR_ERRMODE	 => PDO::ERRMODE_EXCEPTION
 		);
 		// Try and Create new PDO Instance
@@ -32,7 +33,8 @@ class Database
         //Catch any errros that happen when trying to create it.
         catch(PDOEception $e)
         {
-			$this->error = $e->getMessage();
+            $this->error = $e->getMessage();
+            
 		}
 	}
     
@@ -96,7 +98,7 @@ class Database
         return $this->dbh->lastInsertId();
     }
 
-    public function getInfo($table, $id)
+    public function getInfoWithId($table, $id)
     {
         //Use the given id to find
         $this->query("SELECT * FROM $table WHERE id = :id");
@@ -104,7 +106,7 @@ class Database
         $this->execute();
         
         //give back the 
-        return $this->resulSset();
+        return $this->resultSet();
 
     }
     
@@ -113,10 +115,6 @@ class Database
 }
 
 $database = new Database();
-
-
-
-
 
 
 
