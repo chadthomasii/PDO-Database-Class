@@ -11,7 +11,7 @@ class Database
 	private $host	= 'localhost';
 	private $user	= 'root';
 	private $pass	= 'root';
-	private $dbname	= 'ig_clone';
+	private $dbname	= '';
     
     //Database handlers, Error, and Prepeared statement handler
 	private $dbh;
@@ -34,7 +34,7 @@ class Database
             
 		} 
         //Catch any errros that happen when trying to create it.
-        catch(PDOEception $e)
+        catch(Exception $e)
         {
             $this->error = $e->getMessage();
             
@@ -103,6 +103,7 @@ class Database
 
     public function getInfoWithId($table, $id)
     {
+        
         //Use the given id to find
         $this->query("SELECT * FROM $table WHERE id = :id");
         $this->bind(":id", $id);
@@ -118,9 +119,3 @@ class Database
 }
 
 $database = new Database();
-
-
-
-
-
-
